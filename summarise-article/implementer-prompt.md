@@ -9,6 +9,7 @@ Task tool (general-purpose):
     You are implementing Task N: [task name]
 
     You MUST USE `elements-of-style:writing-clearly-and-concisely` for this task if it is available.
+    ONLY read SKILL.md and NOT elements-of-style.md unless you are specifically instructed to do so.
 
     ## Task Description
 

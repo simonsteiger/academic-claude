@@ -17,7 +17,7 @@ Then resolve the output path:
 |---------------|-------------|
 | Full path with filename | Use as-is |
 | Directory path only | `<dir>/<article>.md` |
-| Nothing | Ask: "Where should the summary be saved?" Wait for the answer before proceeding. |
+| Nothing | `summaries/<article>.md` |
 
 Always resolve the output path before creating any tasks.
 
@@ -73,6 +73,10 @@ digraph summarise_article {
 }
 ```
 
+## The Summary Spec
+
+The summary spec should be EXTREMELY tersely written, only using the bare minimum of words to clearly state the content that should be summarised. Reverse any detail for the full summary written in the "Write summary" step.
+
 ## Handling reviewer feedback
 
 Each reviewer returns either a numbered list of issues or confirms no issues. For each issue, write a one-line disposition before revising (e.g. "Issue 3 — fixed: rewrote sentence in active voice"). Address every item; do not skip any. Then overwrite the output file with the revised summary.
@@ -101,20 +105,22 @@ Output: article-summaries/<article>.md
 tags: [tag1, tag2, tag3, ...]
 
 ## Research question
-[research question bullet list]
+[research question VERY BRIEF bullet list]
 
 ## Background
-[background bullet list]
+[background VERY BRIEF bullet list]
 
 ## Methods
-[methods bullet list]
+[methods VERY BRIEF bullet list]
 
 ## Findings
-[findings bullet list]
+[findings VERY BRIEF bullet list]
 
 ## Conclusion
-[conclusion bullet list]
+[conclusion VERY BRIEF bullet list]
 ---
+
+Spec <article>-spec.md written to article-summaries/<article>-spec.md.
 
 User: Looks good, but add [new tag] as a tag.
 
@@ -175,7 +181,7 @@ Brief description of study design, data, and analytic approach. Enough for the r
 
 ## Findings
 
-Narrative prose. Include up to five key findings inline; each finding may carry a small cluster of closely related numbers (e.g. rates across compared groups in one sentence). Omit findings that add length without adding understanding. Do not use a results table.
+Narrative prose. Each finding may carry a small cluster of closely related numbers (e.g. rates across compared groups in one sentence). Omit findings that add length without adding understanding. NEVER provide a full results table.
 
 ## Conclusion
 
