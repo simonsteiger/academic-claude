@@ -23,14 +23,15 @@ Always resolve the output path before creating any tasks.
 
 ## Checklist
 
-You MUST create a task for each of these items and complete them in order:
+You MUST create a task with TaskCreate for each of these items and complete them in order unless otherwise stated under "The Process":
 
-1. Read the article in full
-2. Propose summary spec (tags + bullet-point spec per section) — wait for user approval
-3. Write summary using `elements-of-style:writing-clearly-and-concisely`
-4. Run parallel review via `superpowers:dispatching-parallel-agents`
-5. Revise: if any issues were raised, write a one-line disposition per issue and overwrite the output file; if neither reviewer found issues, skip to step 6
-6. Spec self-review: verify summary matches approved spec (fix inline)
+1. Read the full article
+2. Propose summary spec
+3. Write summary
+4. Review prose
+5. Review accuracy
+6. Revise if necessary
+7. Spec self-review
 
 ## The Process
 
@@ -87,14 +88,14 @@ Before dispatching, read both the output file and `<article>.txt` into context. 
 ## Example Workflow
 
 ```
-You: /summarise-article smith2023.txt → summaries/smith2023.md
+You: /summarise-article <article>.txt → article-summaries/<article>.md
 
-Using summarise-article to summarise smith2023.txt.
-Output: summaries/smith2023.md
+Using summarise-article to summarise <article>.txt.
+Output: article-summaries/<article>.md
 
-[Create tasks: Read, Propose spec, Write, Review, Revise, Spec self-review]
+[Create tasks as in numbered list under Checklist header]
 
-[Read smith2023.txt in full — no output]
+[Read <article>.txt in full — no output]
 
 ---
 tags: [tag1, tag2, tag3, ...]
@@ -121,7 +122,7 @@ User: Looks good, but add [new tag] as a tag.
 
 User: Approved.
 
-[Write summary to summaries/smith2023.md]
+[Write summary to article-summaries/<article>.md]
 [Dispatch prose reviewer and accuracy reviewer in parallel]
 
 Prose reviewer: 2 issues
@@ -136,13 +137,13 @@ Dispositions:
   Issue 2 — fixed: [description]
   Issue 3 — fixed: [description]
 
-[Overwrite summaries/smith2023.md]
+[Overwrite article-summaries/<article>.md]
 
 Spec self-review:
   - All five spec bullets represented ✅
   - No content found outside approved spec ✅
 
-Summary smith2023.md written to summaries/smith2023.md.
+Summary <article>.md written to article-summaries/<article>.md.
 ```
 
 ## Output Format
@@ -181,7 +182,7 @@ Narrative prose. Include up to five key findings inline; each finding may carry 
 What the paper concludes and what it means for the field or for practice.
 ```
 
-**Tag guidance:** Concise, lowercase, hyphenated multi-word tags. Cover topic area, method type, disease/population, and any dimension useful for filtering a collection of summaries (e.g., `rheumatoid-arthritis`, `treat-to-target`, `meta-analysis`, `radiographic-progression`).
+**Tag guidance:** Concise, lowercase, hyphenated multi-word tags. Cover topic area, and method type.
 
 ## Hard Rules
 
@@ -204,5 +205,4 @@ What the paper concludes and what it means for the field or for practice.
 ## Integration
 
 **Required skills:**
-- `elements-of-style:writing-clearly-and-concisely` — load during the write phase; informs prose style throughout
 - `superpowers:dispatching-parallel-agents` — run prose and accuracy reviewers simultaneously

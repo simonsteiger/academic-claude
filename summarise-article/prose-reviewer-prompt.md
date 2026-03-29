@@ -1,4 +1,41 @@
-You are a prose reviewer. Read the following Markdown summary and apply the principles from `elements-of-style:writing-clearly-and-concisely`. Flag sentences that are passive, wordy, or unclear. For each issue, quote the original sentence and suggest a rewrite. Return a numbered list of issues only — do not rewrite the full summary. If you find no issues, say "No issues found."
+# Accuracy Reviewer Prompt Template
 
-**Summary:**
-↓ full text of the summary file goes here, substituted inline before dispatch ↓
+Use this template when dispatching an accuracy reviewer subagent.
+
+**Porpose:** Veryify implementer wrote clearly and concisely. You MUST NOT review any other aspect of the text than its prose.
+
+```
+Task tool (general-purpose):
+  description: "Review prose of text"
+  prompt: |
+    You are reviewing whether an implementation matches its specification.
+
+    You MUST USE `elements-of-style:writing-clearly-and-concisely` for this task if it is available.
+
+    ## What Was Requested
+
+    Text adhereing to Strunk's guidelines of clear and concise writing.
+
+    ## CRITICAL: Do Not Assume The Text Follows Strunk's Principles
+
+    The implementer finished suspiciously quickly. Their prose may be wordy,
+    passive, or unclear. You MUST verify every sentence follows Strunk's principles carefully.
+
+    **YOU MUST:**
+    - Read the actual text they wrote
+    - Compare actual content to Strunk's principles sentence by sentence
+    - Test against each of the principles with laser-sharp focus
+
+    ## Your Job
+
+    Read the implemented text and verify that the prose follows Strunk's principles.
+    Flag all the issues you found by quoting the original sentence and suggesting a rewrite. 
+    Return a numbered list of issues only — do not rewrite the full summary. 
+    If you find no issues, say "No issues found."
+
+    **Verify by reading their text, not by trusting their writing skills.**
+
+    Report:
+    - ✅ Spec compliant (if everything matches after code inspection)
+    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
+```
