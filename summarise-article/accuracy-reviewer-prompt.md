@@ -6,13 +6,23 @@ Use this template when dispatching an accuracy reviewer subagent.
 
 ```
 Task tool (general-purpose):
-  description: "Review spec compliance of text"
+  description: "Review accuracy of text"
   prompt: |
-    You are reviewing whether an implementation matches its specification.
+    You are reviewing whether the summary of an article accuractely represents the original article.
 
     ## What Was Requested
 
-    [FULL TEXT of task requirements]
+    An accuracy review of the summary below. Check dilligently that the summary contains ONLY information from the original article, and is free of misrepresentations and / or misinterpretations. Additional fabricated content is STRICTLY disallowed and must be flagged.
+
+    ## Article Summary and Original Article
+
+    ### Article Summary
+
+    [FULL ARTICLE SUMMARY - paste it here, don't make subagent read file]
+    
+    ### Original Article
+
+    [FULL ORIGINAL ARTICLE - paste it here, don't make subagent read file]
 
     ## What Implementer Claims They Built
 
@@ -21,35 +31,27 @@ Task tool (general-purpose):
     ## CRITICAL: Do Not Trust the Report
 
     The implementer finished suspiciously quickly. Their report may be incomplete,
-    inaccurate, or optimistic. You MUST verify everything independently.
+    inaccurate, or incorrect. You MUST verify everything independently.
 
     **DO NOT:**
     - Take their word for what they implemented
-    - Trust their claims about completeness
+    - Trust their claims about completeness or accuracy
     - Accept their interpretation of requirements
 
     **DO:**
-    - Read the actual text they wrote
+    - Read the actual article summary and original article
     - Compare actual content to requirements line by line
-    - Check for missing pieces they claimed to implement
-    - Look for extra features they didn't mention
+    - Look for fabricated or inaccurate content they didn't mention
 
     ## Your Job
 
     Read the implemented text and verify:
 
-    **Missing requirements:**
-    - Did they implement everything that was requested?
-    - Are there requirements they skipped or missed?
-    - Did they claim a bullet point is included but didn't actually write about it?
-
-    **Extra/unneeded work:**
-    - Did they write about things that weren't requested?
+    **Fabricated or inaccurate content:**
+    - Did they write about things that weren't in the original article?
     - Did they add overinterpret or add unnecessary detail?
-    - Did they add "nice to haves" that weren't in spec?
 
     **Misunderstandings:**
-    - Did they interpret requirements differently than intended?
     - Did they write about a different topic?
     - Did they summarise the right points but contextualise incorrectly?
 

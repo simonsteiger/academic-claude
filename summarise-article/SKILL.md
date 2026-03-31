@@ -11,16 +11,6 @@ First, announce:
 
 > "Using **summarise-article** to summarise `<filename>`."
 
-Then resolve the output path:
-
-| User provides | Output path |
-|---------------|-------------|
-| Full path with filename | Use as-is |
-| Directory path only | `<dir>/<article>.md` |
-| Nothing | `summaries/<article>.md` |
-
-Always resolve the output path before creating any tasks.
-
 ## Checklist
 
 You MUST create a task with TaskCreate for each of these items and complete them in order unless otherwise stated under "The Process":
@@ -120,7 +110,7 @@ tags: [tag1, tag2, tag3, ...]
 [conclusion VERY BRIEF bullet list]
 ---
 
-Spec <article>-spec.md written to article-summaries/<article>-spec.md.
+[Spec <article>-spec.md written to article-summaries/<article>-spec.md.]
 
 User: Looks good, but add [new tag] as a tag.
 
@@ -149,7 +139,7 @@ Spec self-review:
   - All five spec bullets represented ✅
   - No content found outside approved spec ✅
 
-Summary <article>.md written to article-summaries/<article>.md.
+[Summary <article>.md written to article-summaries/<article>.md.]
 ```
 
 ## Output Format
