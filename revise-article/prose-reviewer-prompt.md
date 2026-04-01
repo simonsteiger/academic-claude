@@ -15,7 +15,7 @@ Task tool (general-purpose):
 
     ## What Was Requested
 
-    Text adhereing to Strunk's guidelines of clear and concise writing.
+    Footnotes addressing prose issues in the to Strunk's guidelines of clear and concise writing.
 
     ## CRITICAL: Do Not Assume The Text Follows Strunk's Principles
 
