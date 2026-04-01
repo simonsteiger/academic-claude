@@ -65,7 +65,9 @@ digraph summarise_article {
 
 ## The Summary Spec
 
-The summary spec should be EXTREMELY tersely written, only using the bare minimum of words to clearly state the content that should be summarised. Reverse any detail for the full summary written in the "Write summary" step.
+The summary spec should be EXTREMELY tersely written, only using the bare minimum of words to clearly state the content that should be summarised. Reserve any detail for the full summary written in the "Write summary" step.
+
+AFTER the summary spec has been approved by the user, write it to `<dir>/<article>-spec.md`.
 
 ## Handling reviewer feedback
 
@@ -97,10 +99,10 @@ Use the least powerful model that can handle each role to conserve cost and incr
 ## Example Workflow
 
 ```
-You: /summarise-article <article>.txt → article-summaries/<article>.md
+You: /summarise-article <article>.txt → <dir>/<article>.md
 
 Using summarise-article to summarise <article>.txt.
-Output: article-summaries/<article>.md
+Output: <dir>/<article>.md
 
 [Create tasks as in numbered list under Checklist header]
 
@@ -125,7 +127,7 @@ tags: [tag1, tag2, tag3, ...]
 [conclusion VERY BRIEF bullet list]
 ---
 
-[Spec <article>-spec.md written to article-summaries/<article>-spec.md.]
+[Spec <article>-spec.md written to <dir>/<article>-spec.md.]
 
 User: Looks good, but add [new tag] as a tag.
 
@@ -133,7 +135,7 @@ User: Looks good, but add [new tag] as a tag.
 
 User: Approved.
 
-[Write summary to article-summaries/<article>.md]
+[Write summary to <dir>/<article>.md]
 [Dispatch prose reviewer and accuracy reviewer in parallel]
 
 Prose reviewer: 2 issues
@@ -148,13 +150,13 @@ Dispositions:
   Issue 2 — fixed: [description]
   Issue 3 — fixed: [description]
 
-[Overwrite article-summaries/<article>.md]
+[Overwrite <dir>/<article>.md]
 
 Spec self-review:
   - All five spec bullets represented ✅
   - No content found outside approved spec ✅
 
-[Summary <article>.md written to article-summaries/<article>.md.]
+[Summary <article>.md written to <dir>/<article>.md.]
 ```
 
 ## Output Format
