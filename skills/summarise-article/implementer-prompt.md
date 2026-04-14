@@ -86,8 +86,6 @@ Task tool (general-purpose):
     - Self-review findings (if any)
     - Any issues or concerns
 
-    Write the summary spec to <dir>/<article>-spec.md. 
-
     Use DONE_WITH_CONCERNS if you completed the work but have doubts about correctness.
     Use BLOCKED if you cannot complete the task. Use NEEDS_CONTEXT if you need
     information that wasn't provided. Never silently produce work you're unsure about.

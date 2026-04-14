@@ -67,8 +67,6 @@ digraph summarise_article {
 
 The summary spec should be EXTREMELY tersely written, only using the bare minimum of words to clearly state the content that should be summarised. Reserve any detail for the full summary written in the "Write summary" step.
 
-AFTER the summary spec has been approved by the user, write it to `<dir>/<article>-spec.md`.
-
 ## Handling reviewer feedback
 
 Each reviewer returns either a numbered list of issues or confirms no issues. For each issue, write a one-line disposition before revising (e.g. "Issue 3 — fixed: rewrote sentence in active voice"). Address every item; do not skip any. Then overwrite the output file with the revised summary.
@@ -77,24 +75,17 @@ Each reviewer returns either a numbered list of issues or confirms no issues. Fo
 
 Before dispatching, read both the output file and `<article>.txt` into context. Construct each prompt string by substituting the literal file text inline — subagents do not read files themselves.
 
-- `./impelementer-prompt.md` — implementer subagent prompt
+- `./implementer-prompt.md` — implementer subagent prompt
 - `./prose-reviewer-prompt.md` — prose reviewer subagent prompt
 - `./accuracy-reviewer-prompt.md` — accuracy reviewer subagent prompt
 
 ## Model Selection
 
-Use the least powerful model that can handle each role to conserve cost and increase speed.
-
-**Mechanical implementation tasks** (isolated functions, clear specs, 1-2 files): use a fast, cheap model. Most implementation tasks are mechanical when the plan is well-specified.
-
-**Integration and judgment tasks** (multi-file coordination, pattern matching, debugging): use a standard model.
-
-**Architecture, design, and review tasks**: use the most capable available model.
-
-**Task complexity signals:**
-- Touches 1-2 files with a complete spec → cheap model
-- Touches multiple files with integration concerns → standard model
-- Requires design judgment or broad codebase understanding → most capable model
+| Reviewer    | Model  |
+|-------------|--------|
+| Implementer | Sonnet |
+| Prose       | Haiku  |
+| Accuracy    | Sonnet |
 
 ## Example Workflow
 
@@ -126,8 +117,6 @@ tags: [tag1, tag2, tag3, ...]
 ## Conclusion
 [conclusion VERY BRIEF bullet list]
 ---
-
-[Spec <article>-spec.md written to <dir>/<article>-spec.md.]
 
 User: Looks good, but add [new tag] as a tag.
 

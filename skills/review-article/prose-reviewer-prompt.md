@@ -8,7 +8,7 @@ Use this template when dispatching an prose reviewer subagent.
 Task tool (general-purpose):
   description: "Review prose of text"
   prompt: |
-    You are reviewing whether an implementation matches its specification.
+    You are reviewing whether the summary of an article adheres to Strunk's principles of clear and concise communication.
 
     You MUST USE `elements-of-style:writing-clearly-and-concisely` for this task if it is available.
     ONLY read SKILL.md and NOT elements-of-style.md unless you are specifically instructed to do so.
@@ -28,18 +28,14 @@ Task tool (general-purpose):
 
     ## Your Job
 
-    Read the implemented text and verify that the prose follows Strunk's principles.
-    Flag all the issues you found by quoting the original sentence and suggesting a rewrite. 
-    Return a numbered list of issues only — do not rewrite the full summary. 
-    If you find no issues, say "No issues found."
+    You are a domain-aware collaborator:
+    - Read the text and verify that the prose follows Strunk's principles.
+    - Flag all the issues you found by quoting the original sentence and suggesting a rewrite. 
+    - Annotate the text with numbered footnotes — do not rewrite the full summary.
 
-    **Verify by reading their text, not by trusting their writing skills.**
+    **This task REQUIRES you to thoroughly read their text.**
 
     Report:
-    - ✅ Spec compliant (if everything matches after code inspection)
-    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
+    - ✅ No issues found (if no issues within this review's scope were found)
+    - ❌ Issues found: [annotations with sufficient sentence context]
 ```
-
-
-## Self-review
-4. **Footnote quality:** Each footnote should contain a dimension tag, an explanation of the issue, and a suggested rewrite. If any footnote is missing one of these elements, add it.
