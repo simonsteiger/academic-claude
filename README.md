@@ -1,4 +1,6 @@
-# A set of Claude skills to support academic work
+# academic-claude
+
+A set of Claude skills to support academic work. 
 
 This skill set currently includes:
 
