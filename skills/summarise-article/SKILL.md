@@ -1,6 +1,6 @@
 ---
 name: summarise-article
-description: Use when converting a scientific article (.txt) into a structured Markdown summary.
+description: Use when converting a scientific article (.txt) into a structured TOML summary record.
 ---
 
 # Summarise Article
@@ -90,33 +90,22 @@ Before dispatching, read both the output file and `<article>.txt` into context. 
 ## Example Workflow
 
 ```
-You: /summarise-article <article>.txt → <dir>/<article>.md
+You: /summarise-article <article>.txt → summaries/<id>.toml
 
 Using summarise-article to summarise <article>.txt.
-Output: <dir>/<article>.md
+Output: summaries/<id>.toml  (id = lastname_year)
 
 [Create tasks as in numbered list under Checklist header]
 
 [Read <article>.txt in full — no output]
 
----
-tags: [tag1, tag2, tag3, ...]
-
-## Research question
-[research question VERY BRIEF bullet list]
-
-## Background
-[background VERY BRIEF bullet list]
-
-## Methods
-[methods VERY BRIEF bullet list]
-
-## Findings
-[findings VERY BRIEF bullet list]
-
-## Conclusion
-[conclusion VERY BRIEF bullet list]
----
+Proposed spec for <id>.toml:
+  tags: [tag1, tag2, tag3, ...]
+  research_question: [VERY BRIEF bullet list]
+  background:        [VERY BRIEF bullet list]
+  methods:           [VERY BRIEF bullet list]
+  findings:          [VERY BRIEF bullet list]
+  conclusion:        [VERY BRIEF bullet list]
 
 User: Looks good, but add [new tag] as a tag.
 
@@ -124,7 +113,7 @@ User: Looks good, but add [new tag] as a tag.
 
 User: Approved.
 
-[Write summary to <dir>/<article>.md]
+[Write the TOML record to summaries/<id>.toml]
 [Dispatch prose reviewer and accuracy reviewer in parallel]
 
 Prose reviewer: 2 issues
@@ -139,60 +128,68 @@ Dispositions:
   Issue 2 — fixed: [description]
   Issue 3 — fixed: [description]
 
-[Overwrite <dir>/<article>.md]
+[Overwrite summaries/<id>.toml]
 
 Spec self-review:
-  - All five spec bullets represented ✅
+  - All five content fields represented ✅
+  - All metadata fields populated ✅
   - No content found outside approved spec ✅
+  - File parses as TOML ✅
 
-[Summary <article>.md written to <dir>/<article>.md.]
+[Summary written to summaries/<id>.toml.]
 ```
 
 ## Output Format
 
-The summary MUST use these elements in this order:
+The summary is a single TOML record written to `summaries/<id>.toml`. The filename stem equals the `id` field.
 
-```markdown
----
-tags: [tag1, tag2, ...]
----
+**`id`** — `lastname_year`: lowercase first-author family name plus the publication year (e.g. `klareskog_2009`). Non-ASCII letters are kept (e.g. `svärd_2015`). If a record for the same author and year already exists in `summaries/`, append a disambiguation letter: `duarte_2024`, then `duarte_2024a`, `duarte_2024b`, …
 
-# Summary: Author et al. (Year)
+The record MUST contain these fields, metadata first, then the five content fields as triple-quoted (`"""`) multiline strings:
 
-**Citation:** Short reference providing first three authors, year, and a doi link (Example: [Snow J, Ruckus B, Legrand C, et al. (2012)](example.doi)).
+```toml
+id = "klareskog_2009"
+authors = ["Klareskog L", "Catrina AI", "Paget S"]
+year = 2009
+title = "Rheumatoid arthritis"
+journal = "The Lancet"
+doi = "10.1016/S0140-6736(09)60008-8"
+tags = ["rheumatoid-arthritis", "review", "pathogenesis"]
 
----
-
-## Research question
-
+research_question = """
 One or two sentences stating what question the paper addresses.
+"""
 
-## Background
-
+background = """
 Context and motivation: what was known before, what gap this study fills, why the question matters.
+"""
 
-## Methods
-
+methods = """
 Brief description of study design, data, and analytic approach. Enough for the reader to judge applicability — no exhaustive detail.
+"""
 
-## Findings
+findings = """
+Narrative prose. Each finding may carry a small cluster of closely related numbers (e.g. rates across compared groups in one sentence). Omit findings that add length without adding understanding. NEVER provide a results table.
+"""
 
-Narrative prose. Each finding may carry a small cluster of closely related numbers (e.g. rates across compared groups in one sentence). Omit findings that add length without adding understanding. NEVER provide a full results table.
-
-## Conclusion
-
+conclusion = """
 What the paper concludes and what it means for the field or for practice.
+"""
 ```
 
-**Tag guidance:** Concise, lowercase, hyphenated multi-word tags. Cover topic area, and method type.
+**Metadata sources:** Take `authors`, `year`, `title`, `journal`, and `doi` from the article's own bibliographic information. Format every author as `"Family II"` — family name plus the uppercased initials of each given name, no periods (e.g. "Aletaha D", "Catrina AI"). `authors[1]` is the first author.
+
+**Tag guidance:** Concise, lowercase, hyphenated multi-word tags covering topic area and method type. Follow the project's `notes/tag-conventions.md` where one applies.
 
 ## Hard Rules
 
-- **YAML frontmatter is required.** Do not omit the `---` tags block. Tags must be present.
-- **Exactly five sections:** Research question, Background, Methods, Findings, Conclusion. Do not add, rename, or remove sections. No "Overview", "Key Results", "Discussion", "Limitations", "Strengths", or "Contextual relevance" sections.
-- **No Markdown tables.** Findings must be narrative prose only. Present numbers inline in sentences, not in table rows.
-- **Up to five findings.** Each finding may include a small cluster of related numbers in one sentence. Include only findings necessary to convey the result.
-- **No Limitations section.** Limitations are out of scope for this summary format.
+- **All metadata fields are required:** `id`, `authors`, `year`, `title`, `journal`, `doi`, `tags`. Leave a string empty (`""`) only if the article genuinely lacks it (e.g. a missing DOI); never invent one.
+- **Exactly five content fields:** `research_question`, `background`, `methods`, `findings`, `conclusion`. Do not add, rename, or remove fields. No "overview", "key_results", "discussion", "limitations", "strengths", or "contextual_relevance".
+- **Content fields are triple-quoted strings.** Use narrative prose inside them; no Markdown headings.
+- **No tables.** Findings must be narrative prose only. Present numbers inline in sentences.
+- **Up to five findings.** Each may include a small cluster of related numbers in one sentence. Include only findings necessary to convey the result.
+- **No limitations.** Limitations are out of scope for this record.
+- **The file must parse as TOML.** A content value may not contain a literal `"""`.
 
 ## Red Flags
 
