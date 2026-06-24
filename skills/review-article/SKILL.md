@@ -78,30 +78,32 @@ digraph footnote_merge {
     collect [label="1. Collect footnotes\nfrom all three intermediate files"]
     check   [label="2. Valid footnote?\n(context clear + explanation + suggested rewrite)", shape=diamond]
     return  [label="Return to reviewer subagent\n(fix problematic footnote)"]
-    renum   [label="3. Renumber sequentially\n[^r1], [^r2], … in document order"]
+    place   [label="3. Walk source in document order;\nat each anchor insert its namespaced marker\nand append its definition (no renumbering)"]
     write   [label="4. Write merged result\n→ <filename>-reviewed.md"]
     delete  [label="5. Delete the three\nintermediate files"]
     done    [label="Done"]
 
     collect -> check
-    check   -> renum  [label="yes"]
+    check   -> place  [label="yes"]
     check   -> return [label="no"]
     return  -> check  [label="re-review"]
-    renum   -> write
+    place   -> write
     write   -> delete
     delete  -> done
 }
 ```
 
-Read `<filename>.md` once here — you need the source body to place the `[^rN]` markers. You deliberately did not load it at dispatch time, so this is the only point the full source enters your context.
+Read `<filename>.md` once here — you need the source body to place the markers. You deliberately did not load it at dispatch time, so this is the only point the full source enters your context.
 
-The final `<filename>-reviewed.md` contains the full source text with all footnote markers in place and all footnote definitions at the bottom, unified and sequentially numbered.
+Walk the source in document order. At each footnote's `Anchor` sentence, append its namespaced marker (`[^pN]`/`[^aN]`/`[^gN]`) after that sentence and append `<label>: <Note>` to a running definition list. Do NOT renumber: because markers and definitions are both emitted in document order, the file renders as sequential 1, 2, 3… under any Markdown renderer, and the namespaces keep labels from colliding.
+
+The final `<filename>-reviewed.md` contains the full source text with all footnote markers in place and all footnote definitions at the bottom.
 
 ### Step 5 — Self-review
 
 After writing the merged file, read it with fresh eyes. This is a checklist you run yourself — not a subagent dispatch.
 
-You MUST thoroughly verify that every `[^rN]` marker in the body has a matching definition at the bottom, and every definition at the bottom has a matching marker in the body. No orphans in either direction.
+You MUST thoroughly verify that every footnote marker in the body (`[^pN]`, `[^aN]`, `[^gN]`) has a matching definition at the bottom, and every definition at the bottom has a matching marker in the body. No orphans in either direction.
 
 Fix any issues inline. No need to re-review after fixing — just correct and move on.
 
