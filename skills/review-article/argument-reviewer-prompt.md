@@ -38,13 +38,25 @@ Task tool (general-purpose):
     You are a domain-aware collaborator:
     - Review the text for argument structure.
     - Flag logical gaps and structural problems grounded in the text's specific scientific context.
-    - Annotate the text with numbered footnotes — do not rewrite the full summary.
+    - Annotate with footnotes labelled `[^a1]`, `[^a2]`, … — the `a` prefix is yours and keeps your labels from colliding with the other reviewers'. Do not rewrite the full summary.
 
     **This task REQUIRES you to thoroughly read their text.**
 
     ## Output
 
-    Write your footnotes to the output path the controller substitutes (`<filename>-argument.md`). Each footnote is a definition with enough quoted sentence context for the controller to locate it in the source. Do NOT return the annotations in your reply.
+    Write your footnotes to the output path the controller substitutes (`<filename>-argument.md`), as a list in this EXACT format so the controller can place each one mechanically:
+
+    ## Footnotes
+
+    ### [^a1]
+    **Anchor:** "verbatim quoted sentence from the source that this marker attaches to"
+    **Note:** the issue and the explanation
+
+    ### [^a2]
+    **Anchor:** "..."
+    **Note:** ...
+
+    Use the `a` prefix and number sequentially within it (`[^a1]`, `[^a2]`, …). Copy each Anchor verbatim from the source so it can be located. Do NOT return the annotations in your reply.
 
     Return ONLY:
     - The verdict: ✅ No issues found (if none within this review's scope) or ❌ Issues found
