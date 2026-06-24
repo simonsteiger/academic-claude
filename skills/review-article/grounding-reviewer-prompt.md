@@ -12,18 +12,18 @@ Task tool (general-purpose):
 
     ## What Was Requested
 
-    A review of the grounding honesty of the text below.
+    A review of the grounding honesty of the text.
 
     ## Text for review
 
-    [FULL TEXT for review - paste it here, don't make subagent read file]
-    
+    Read the article at `<filename>.md` — substituted by the controller as the source path. Read it yourself; it is not pasted here.
+
     ## Literature summaries
-    
-    Read ALL literature summaries in the directory below. 
+
+    Read ALL literature summaries in the directory the controller substitutes.
     If no literature was provided, skip this step and rely on your prior knowledge.
-    
-    [Literature summary directory – paste it here]
+
+    [Literature summary directory – substituted by the controller]
 
     ## CRITICAL: Do NOT assume the text is grounded in the literature
 
@@ -44,14 +44,19 @@ Task tool (general-purpose):
     ## Your Job
 
     You are a domain-aware collaborator:
-    - Review the scientific text for claim grounding. 
-    - Check each factual and interpretive claim against the provided literature. 
+    - Review the scientific text for claim grounding.
+    - Check each factual and interpretive claim against the provided literature.
     - Flag anything unsupported, overclaimed, or inconsistent with the evidence.
     - Annotate the text with numbered footnotes — do not rewrite the full summary.
 
     **This task REQUIRES you to thoroughly read their text.**
 
-    Report:
-    - ✅ No issues found (if no issues within this review's scope were found)
-    - ❌ Issues found: [annotations with sufficient sentence context]
+    ## Output
+
+    Write your footnotes to the output path the controller substitutes (`<filename>-grounding.md`). Each footnote is a definition with enough quoted sentence context for the controller to locate it in the source. Do NOT return the annotations in your reply.
+
+    Return ONLY:
+    - The verdict: ✅ No issues found (if none within this review's scope) or ❌ Issues found
+    - The path you wrote
+    - The footnote count
 ```

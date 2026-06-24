@@ -1,8 +1,8 @@
 # Prose Reviewer Prompt Template
 
-Use this template when dispatching an prose reviewer subagent.
+Use this template when dispatching a prose reviewer subagent.
 
-**Porpose:** Verify implementer wrote clearly and concisely. You MUST NOT review any other aspect of the text than its prose.
+**Purpose:** Verify the author wrote clearly and concisely. You MUST NOT review any aspect of the text other than its prose.
 
 ```
 Task tool (general-purpose):
@@ -13,9 +13,13 @@ Task tool (general-purpose):
     You MUST USE `elements-of-style:writing-clearly-and-concisely` for this task if it is available.
     ONLY read SKILL.md and NOT elements-of-style.md unless you are specifically instructed to do so.
 
+    ## Text for review
+
+    Read the article at `<filename>.md` — substituted by the controller as the source path. Read it yourself; it is not pasted here.
+
     ## What Was Requested
 
-    Footnotes addressing prose issues in the to Strunk's guidelines of clear and concise writing.
+    Footnotes addressing prose issues against Strunk's guidelines for clear and concise writing.
 
     ## CRITICAL: Do Not Assume The Text Follows Strunk's Principles
 
@@ -30,12 +34,17 @@ Task tool (general-purpose):
 
     You are a domain-aware collaborator:
     - Read the text and verify that the prose follows Strunk's principles.
-    - Flag all the issues you found by quoting the original sentence and suggesting a rewrite. 
+    - Flag all the issues you found by quoting the original sentence and suggesting a rewrite.
     - Annotate the text with numbered footnotes — do not rewrite the full summary.
 
     **This task REQUIRES you to thoroughly read their text.**
 
-    Report:
-    - ✅ No issues found (if no issues within this review's scope were found)
-    - ❌ Issues found: [annotations with sufficient sentence context]
+    ## Output
+
+    Write your footnotes to the output path the controller substitutes (`<filename>-prose.md`). Each footnote is a definition with enough quoted sentence context for the controller to locate it in the source. Do NOT return the annotations in your reply.
+
+    Return ONLY:
+    - The verdict: ✅ No issues found (if none within this review's scope) or ❌ Issues found
+    - The path you wrote
+    - The footnote count
 ```

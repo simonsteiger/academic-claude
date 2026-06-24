@@ -8,15 +8,15 @@ Use this template when dispatching an argument reviewer subagent.
 Task tool (general-purpose):
   description: "Review argument quality of text"
   prompt: |
-    You are reviewing whether the argumentative structure of an text is structured logically, and links different units of content coherently.
+    You are reviewing whether the argumentative structure of a text is logical and links different units of content coherently.
 
     ## What Was Requested
 
-    A review of the argumentative structure of the text below. Additional fabricated content is STRICTLY disallowed and must be flagged.
+    A review of the argumentative structure of the text. Additional fabricated content is STRICTLY disallowed and must be flagged.
 
     ## Text for review
 
-    [FULL TEXT for review - paste it here, don't make subagent read file]
+    Read the article at `<filename>.md` — substituted by the controller as the source path. Read it yourself; it is not pasted here.
 
     ## CRITICAL: Do NOT assume the text is well-structured
 
@@ -36,13 +36,18 @@ Task tool (general-purpose):
     ## Your Job
 
     You are a domain-aware collaborator:
-    - Review the text for argument structure. 
+    - Review the text for argument structure.
     - Flag logical gaps and structural problems grounded in the text's specific scientific context.
     - Annotate the text with numbered footnotes — do not rewrite the full summary.
 
     **This task REQUIRES you to thoroughly read their text.**
 
-    Report:
-    - ✅ No issues found (if no issues within this review's scope were found)
-    - ❌ Issues found: [annotations with sufficient sentence context]
+    ## Output
+
+    Write your footnotes to the output path the controller substitutes (`<filename>-argument.md`). Each footnote is a definition with enough quoted sentence context for the controller to locate it in the source. Do NOT return the annotations in your reply.
+
+    Return ONLY:
+    - The verdict: ✅ No issues found (if none within this review's scope) or ❌ Issues found
+    - The path you wrote
+    - The footnote count
 ```
