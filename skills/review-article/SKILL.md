@@ -76,7 +76,7 @@ Output paths:
 ```dot
 digraph footnote_merge {
     collect [label="1. Collect footnotes\nfrom all three intermediate files"]
-    check   [label="2. Valid footnote?\n(context clear + explanation + suggested rewrite)", shape=diamond]
+    check   [label="2. Valid footnote?\n(context clear + explanation +\nrewrite/reference where applicable)", shape=diamond]
     return  [label="Return to reviewer subagent\n(fix problematic footnote)"]
     place   [label="3. Walk source in document order;\nat each anchor insert its namespaced marker\nand append its definition (no renumbering)"]
     write   [label="4. Write merged result\n→ <filename>-reviewed.md"]
