@@ -73,7 +73,14 @@ Each reviewer returns either a numbered list of issues or confirms no issues. Fo
 
 ## Prompt Templates
 
-Before dispatching, read both the output file and `<article>.txt` into context. Construct each prompt string by substituting the literal file text inline — subagents do not read files themselves.
+Before dispatching, read both the output file and the source article into your own context, then construct each prompt string by substituting the **literal article text inline**. Subagents MUST NOT read files themselves.
+
+This rule is absolute. It holds **even if you have already read the source** and **even when inlining costs more tokens** — neither is a reason to have a subagent open a file. If the source is a PDF rather than `.txt`, you still read it yourself and paste the extracted text inline; never hand a subagent a path to read. If inlining ever seems wasteful or impractical, raise it with the user rather than silently working around this instruction.
+
+**Pre-dispatch self-check — state these in your message before every subagent dispatch:**
+1. The article/summary text is pasted inline in the prompt.
+2. No subagent is told to read, open, or fetch any file.
+If either check fails, fix the prompt before dispatching.
 
 - `./implementer-prompt.md` — implementer subagent prompt
 - `./prose-reviewer-prompt.md` — prose reviewer subagent prompt
@@ -200,6 +207,8 @@ What the paper concludes and what it means for the field or for practice.
 - If a finding appears in the summary but not in the approved spec, remove it
 - Less content is better than fabricated content
 - If an approved spec bullet is missing from the summary, add it before overwriting
+- Never tell a subagent to read the article or any source file — paste the text inline, even if you already read it yourself and even to save tokens
+- Never substitute an efficiency optimisation for an explicit instruction in this skill; if a shortcut seems better, raise it with the user instead of taking it silently
 
 ## Integration
 
